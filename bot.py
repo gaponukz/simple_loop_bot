@@ -4,21 +4,9 @@ from aiogram import (
 import asyncio, os
 import aioschedule
 import json
-import aiohttp
-import os
 
-from aiohttp import web
-from urllib.parse import urljoin
-from aiogram.dispatcher.webhook import get_new_configured_app
-from aiogram.utils import context
-
-TOKEN = '1549669090:AAEtDBdzYf_le6Dvx_DRNiO2qtBOIeG9lAM'
-
-WEBHOOK_HOST = 'https://simpleloopbot.herokuapp.com/'
-WEBHOOK_URL_PATH = '/webhook/' + TOKEN
-WEBHOOK_URL = urljoin(WEBHOOK_HOST, WEBHOOK_URL_PATH)
-
-bot = Bot(token = TOKEN) # 1549669090:AAEtDBdzYf_le6Dvx_DRNiO2qtBOIeG9lAM
+bot = Bot(token = '1549669090:AAEtDBdzYf_le6Dvx_DRNiO2qtBOIeG9lAM')
+# 1011547803:AAGVi0ilCkXixUF5--uArNYa5oy0oW3p5_k
 bot_name = 'LoopBot'
 dp = Dispatcher(bot)
 
@@ -64,17 +52,6 @@ async def sheduler():
 
 async def on_startup(x):
     asyncio.create_task(sheduler())
-    await bot.delete_webhook()
-    await bot.set_webhook(WEBHOOK_URL)
 
 if __name__ == '__main__':
-    # executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
-    print('Staaaaaaaaaaaaaaaaaaaaaaart')
-
-    try:
-        app = get_new_configured_app(dispatcher=dp, path=WEBHOOK_URL_PATH)
-        app.on_startup.append(on_startup)
-        dp.loop.set_task_factory(context.task_factory)
-        web.run_app(app, host='0.0.0.0', port=8443)
-    except Exception as error:
-        print(error.__class__.__name__, error)
+    executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
