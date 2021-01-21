@@ -69,8 +69,12 @@ async def on_startup(x):
 
 if __name__ == '__main__':
     # executor.start_polling(dp, skip_updates=False, on_startup=on_startup)
+    print('Staaaaaaaaaaaaaaaaaaaaaaart')
 
-    app = get_new_configured_app(dispatcher=dp, path=WEBHOOK_URL_PATH)
-    app.on_startup.append(on_startup)
-    dp.loop.set_task_factory(context.task_factory)
-    web.run_app(app, host='0.0.0.0', port=8443) 
+    try:
+        app = get_new_configured_app(dispatcher=dp, path=WEBHOOK_URL_PATH)
+        app.on_startup.append(on_startup)
+        dp.loop.set_task_factory(context.task_factory)
+        web.run_app(app, host='0.0.0.0', port=8443)
+    except Exception as error:
+        print(error.__class__.__name__, error)
