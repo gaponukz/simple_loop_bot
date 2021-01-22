@@ -32,10 +32,13 @@ async def write_setting(setting: dict) -> None:
 
 @dp.message_handler(commands = ['start'])
 async def start_bot(message: types.Message):
-    setting = await read_setting()
-    setting['message'] = message.text.split('-')[1][1:]
-
-    await write_setting(setting)
+    try:
+        setting = await read_setting()
+        setting['message'] = message.text.split('-')[1][1:]
+        await write_setting(setting)
+    except Exception as error:
+        await bot.send_message(message.from_user.id, "Let's start!")
+    
     await bot.send_message(message.from_user.id, "OK!")
 
 @dp.message_handler(commands = ['stop'])
