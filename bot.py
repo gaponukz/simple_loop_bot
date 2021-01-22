@@ -1,7 +1,6 @@
 from aiogram.utils.executor import start_webhook
-from aiogram import (
-    Bot, Dispatcher, executor, types
-)
+from aiogram.dispatcher import Dispatcher
+from aiogram import Bot, types
 
 import asyncio, os
 import aioschedule
@@ -20,6 +19,8 @@ WEBAPP_PORT = os.environ.get('PORT')
 bot = Bot(token = TOKEN)
 bot_name = 'LoopBot'
 dp = Dispatcher(bot)
+
+logging.basicConfig(level=logging.INFO)
 
 async def read_setting() -> None:
     with open('setting.json', 'r', encoding='utf-8') as out:
@@ -62,8 +63,8 @@ async def sheduler():
         await asyncio.sleep(1)
 
 async def on_startup(dp):
-    asyncio.create_task(sheduler())
     await bot.set_webhook(WEBHOOK_URL)
+    asyncio.create_task(sheduler())
 
 async def on_shutdown(dp):
     pass
