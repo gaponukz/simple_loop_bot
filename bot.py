@@ -60,7 +60,7 @@ async def sheduler():
 
 async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
-    asyncio.create_task(sheduler())
+    # asyncio.create_task(sheduler())
 
 async def on_shutdown(dp):
     pass
