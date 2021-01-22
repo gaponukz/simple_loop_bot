@@ -71,12 +71,8 @@ async def on_shutdown(dp):
     pass
 
 if __name__ == '__main__':
-
-    try:
         app = get_new_configured_app(dispatcher=dp, path=WEBHOOK_URL_PATH)
         app.on_startup.append(on_startup)
         app.on_shutdown.append(on_shutdown)
         dp.loop.set_task_factory(context.task_factory)
         web.run_app(app, host='0.0.0.0', port=os.environ.get('PORT'))
-    except Exception as error:
-        print(error.__class__.__name__, error)
